@@ -26,11 +26,11 @@ public class JWTFilter extends OncePerRequestFilter {
         String authorization = request.getHeader("Authorization");
 
         // Authorization header가 null이라면
-        if (authorization != null && authorization.startsWith("Bearer ")) {
+        if (authorization == null || !authorization.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
-        
+
         String token = authorization.split(" ")[1];
         
         // 토큰 소멸 시간 검증
